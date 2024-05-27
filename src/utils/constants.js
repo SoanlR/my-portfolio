@@ -50,7 +50,11 @@ export const links = [
   { text: "Experience", path: "/experience" },
   // { text: "Blogs", path: "/blogs" },
   { text: "Contact", path: "/contact" },
-  // { text: "Resume", path: "/resume" },
+  {
+    text: "Resume",
+    path: "https://drive.google.com/file/d/1lMV2aiwE3zOay5k4N4usUK685X_wyptQ/view?usp=drive_link",
+    type: "Link",
+  },
 ];
 
 export const interestsData = [

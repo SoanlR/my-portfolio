@@ -14,13 +14,13 @@ import {
   Flex,
   Heading,
   Icon,
-  Stack
+  Stack,
 } from "@chakra-ui/react";
 import { BsFillSendFill } from "react-icons/bs";
 import RadioCard from "../../components/RadioCards";
 import { useForm } from "react-hook-form";
 import { useToast } from "@chakra-ui/react";
-import { RevealWrapper } from 'next-reveal'
+import { RevealWrapper } from "next-reveal";
 
 const ContactForm = () => {
   const toast = useToast();
@@ -36,23 +36,23 @@ const ContactForm = () => {
     handleSubmit,
     register,
     formState: { errors },
-    reset
+    reset,
   } = useForm();
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (formData) => {
     setIsLoading(true);
-    formData["interested-in"] = interestedIn;
-    const formSubmitURL = `https://fabform.io/f/${process.env.NEXT_PUBLIC_FAB_FORM_KEY}`;
+    formData["interestedIn"] = interestedIn;
+    const apiEndpoint = "/api/email";
+    console.log({ formData });
     try {
-      const response = await fetch(formSubmitURL, {
+      const response = await fetch(apiEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
-
       if (!response.ok) {
         throw new Error("Unable to send message ");
       }
@@ -87,87 +87,92 @@ const ContactForm = () => {
 
   return (
     <>
-    <RevealWrapper className="load-hidden" delay={600}>
-      <Card className="contact-form-card" borderRadius="2rem" backgroundColor="white" padding="10px 15px">
-        <CardBody>
-          <Heading size="md" color="black" my={3}>
-            I&apos;m interested in...
-          </Heading>
-          <Flex {...group} wrap="wrap" px={1}>
-            {options.map((value) => {
-              const radio = getRadioProps({ value });
-              return (
-                <RadioCard key={value} {...radio}>
-                  {value}
-                </RadioCard>
-              );
-            })}
-          </Flex>
-          <Stack as="form" onSubmit={handleSubmit(onSubmit)}>
-            <FormControl isRequired isInvalid={errors.name} my={4}>
-              <FormLabel htmlFor="name">Enter Name</FormLabel>
-              <Input
-                id="name"
-                className="contact-input"
-                type="text"
-                placeholder="Your Name"
-                {...register("name", { required: true })}
-              />
-              {errors.name && (
-                <FormErrorMessage>Enter your name</FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl isRequired isInvalid={errors.email}>
-              <FormLabel htmlFor="email">Enter Email</FormLabel>
-              <Input
-                id="email"
-                className="contact-input"
-                type="email"
-                placeholder="Your Email"
-                {...register("email", { required: true })}
-              />
-              {errors.email && (
-                <FormErrorMessage>Enter your email</FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl my={4}>
-              <FormLabel htmlFor="number">Enter Phone No.</FormLabel>
-              <NumberInput id="number" {...register("number")}>
-                <NumberInputField
+      <RevealWrapper className="load-hidden" delay={600}>
+        <Card
+          className="contact-form-card"
+          borderRadius="2rem"
+          backgroundColor="white"
+          padding="10px 15px"
+        >
+          <CardBody>
+            <Heading size="md" color="black" my={3}>
+              I&apos;m interested in...
+            </Heading>
+            <Flex {...group} wrap="wrap" px={1}>
+              {options.map((value) => {
+                const radio = getRadioProps({ value });
+                return (
+                  <RadioCard key={value} {...radio}>
+                    {value}
+                  </RadioCard>
+                );
+              })}
+            </Flex>
+            <Stack as="form" onSubmit={handleSubmit(onSubmit)}>
+              <FormControl isRequired isInvalid={errors.name} my={4}>
+                <FormLabel htmlFor="name">Enter Name</FormLabel>
+                <Input
+                  id="name"
                   className="contact-input"
-                  placeholder="Your Phone No."
+                  type="text"
+                  placeholder="Your Name"
+                  {...register("name", { required: true })}
                 />
-              </NumberInput>
-            </FormControl>
-            <FormControl isRequired isInvalid={errors.message}>
-              <FormLabel htmlFor="message">Enter Message</FormLabel>
-              <Textarea
-                id="message"
-                className="contact-input"
-                placeholder="Your Message"
-                {...register("message", { required: true })}
-              />
-              {errors.message && (
-                <FormErrorMessage>Enter your message</FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl>
-              <Button
-                isLoading={isLoading}
-                loadingText='Submitting'
-                backgroundColor="social.instagram"
-                my={3}
-                _hover={{ backgroundColor: "social.instagramHover" }}
-                type="submit"
-              >
-                <Icon mr={1} as={BsFillSendFill} />
-                Send Message
-              </Button>
-            </FormControl>
-          </Stack>
-        </CardBody>
-      </Card>
-    </RevealWrapper>
+                {errors.name && (
+                  <FormErrorMessage>Enter your name</FormErrorMessage>
+                )}
+              </FormControl>
+              <FormControl isRequired isInvalid={errors.email}>
+                <FormLabel htmlFor="email">Enter Email</FormLabel>
+                <Input
+                  id="email"
+                  className="contact-input"
+                  type="email"
+                  placeholder="Your Email"
+                  {...register("email", { required: true })}
+                />
+                {errors.email && (
+                  <FormErrorMessage>Enter your email</FormErrorMessage>
+                )}
+              </FormControl>
+              <FormControl my={4}>
+                <FormLabel htmlFor="number">Enter Phone No.</FormLabel>
+                <NumberInput id="number" {...register("number")}>
+                  <NumberInputField
+                    className="contact-input"
+                    placeholder="Your Phone No."
+                  />
+                </NumberInput>
+              </FormControl>
+              <FormControl isRequired isInvalid={errors.message}>
+                <FormLabel htmlFor="message">Enter Message</FormLabel>
+                <Textarea
+                  id="message"
+                  className="contact-input"
+                  placeholder="Your Message"
+                  {...register("message", { required: true })}
+                />
+                {errors.message && (
+                  <FormErrorMessage>Enter your message</FormErrorMessage>
+                )}
+              </FormControl>
+              <FormControl>
+                <Button
+                  isLoading={isLoading}
+                  loadingText="Submitting"
+                  backgroundColor="social.instagram"
+                  my={3}
+                  _hover={{ backgroundColor: "social.instagramHover" }}
+                  type="submit"
+                >
+                  <Icon mr={1} as={BsFillSendFill} />
+                  Send Message
+                </Button>
+              </FormControl>
+            </Stack>
+          </CardBody>
+        </Card>
+      </RevealWrapper>
     </>
   );
 };

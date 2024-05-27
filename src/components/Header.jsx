@@ -36,12 +36,14 @@ export default function Header() {
             <Link
               key={index}
               href={link.path}
+              type={link.type}
               fontWeight="medium"
               _hover={{
                 textDecoration: "none",
                 color: "blueTheme.navLinkActive",
               }}
               fontSize="lg"
+              target="_blank"
               className={pathname === link.path ? "active-link" : ""}
             >
               {link.text}
