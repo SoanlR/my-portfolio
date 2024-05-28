@@ -1,4 +1,4 @@
-import Favicon from "/public/images/favicon.jpg";
+import Favicon from "/public/images/favicon.png";
 import ClientRootLayout from "../components/ClientRootLayout";
 
 export const metadata = {

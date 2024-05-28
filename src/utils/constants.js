@@ -54,6 +54,7 @@ export const links = [
     text: "Resume",
     path: "https://drive.google.com/file/d/1lMV2aiwE3zOay5k4N4usUK685X_wyptQ/view?usp=drive_link",
     type: "Link",
+    target: "_blank",
   },
 ];
 

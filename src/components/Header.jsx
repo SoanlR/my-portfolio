@@ -43,7 +43,7 @@ export default function Header() {
                 color: "blueTheme.navLinkActive",
               }}
               fontSize="lg"
-              target="_blank"
+              target={link.target}
               className={pathname === link.path ? "active-link" : ""}
             >
               {link.text}
